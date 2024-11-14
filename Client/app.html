@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Estimator Form</title>
+    <link rel="stylesheet" href="app.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>Area (Square Feet)</h2>
+    <input type="number" id="area" placeholder="Enter area in sq ft" />
+
+    <h2>BHK</h2>
+    <div class="btn-group" id="bhk">
+        <button onclick="selectOption('bhk', 1)">1</button>
+        <button onclick="selectOption('bhk', 2)">2</button>
+        <button onclick="selectOption('bhk', 3)" class="selected">3</button>
+        <button onclick="selectOption('bhk', 4)">4</button>
+        <button onclick="selectOption('bhk', 5)">5</button>
+    </div>
+
+    <h2>Bath</h2>
+    <div class="btn-group" id="bath">
+        <button onclick="selectOption('bath', 1)">1</button>
+        <button onclick="selectOption('bath', 2)">2</button>
+        <button onclick="selectOption('bath', 3)" class="selected">3</button>
+        <button onclick="selectOption('bath', 4)">4</button>
+        <button onclick="selectOption('bath', 5)">5</button>
+    </div>
+
+    <h2>Location</h2>
+    <select id="location">
+        <option value="1st block jayanagar">1st Block Jayanagar</option>
+        <option value="2nd block jayanagar">2nd Block Jayanagar</option>
+        <option value="3rd block jayanagar">3rd Block Jayanagar</option>
+    </select>
+
+    <button class="estimate-btn" onclick="estimatePrice()">Estimate Price</button>
+
+    <div class="price-display" id="priceDisplay">110.4 Lakh</div>
+</div>
+    <script src="app.js"></script>
+<script>
+    function estimatePrice() {
+    const area = document.getElementById('area').value;
+    const bhk = document.querySelector('#bhk .selected').textContent;
+    const bath = document.querySelector('#bath .selected').textContent;
+    const location = document.getElementById('location').value;
+ var url = "http://127.0.0.1:5000/predict_home_price";
+ $.post(url,{
+    total_sqft: area,
+    bhk:bhk,
+    bath:bath,
+    location: location
+ }, function(data,status){
+        document.getElementById('priceDisplay').textContent = data.estimated_price + ' Lakh';
+
+ })
+
+}
+</script>
+</body>
+</html>

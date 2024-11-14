@@ -256,5 +256,5 @@ predict_price('Hebbal',1000,3,3)
 predict_price('Indira Nagar',1000,2,1)
 
 import pickle
-with open('banglore_home_prices_model.pickle','wb') as f:
+with open('../Server/artifacts/banglore_home_prices_model.pickle', 'wb') as f:
   pickle.dump(lr_clf,f)
